@@ -7,7 +7,7 @@
 
 /* --------------- utils --------------- */
 
-#define FATAL(fmt, ...) { fprintf(stderr, fmt, ##__VA_ARGS__); exit(1); }
+#define FATAL(fmt, ...) fprintf(stderr, fmt, ##__VA_ARGS__), exit(1)
 #define ASSERT(x, fmt, ...) if (!(x)) { FATAL(fmt, ##__VA_ARGS__); }
 
 /* --------------- list ---------------- */
@@ -61,9 +61,9 @@ struct Symbol* resolve(struct Scope* scope, char* name);
 enum {
 	A_IDENT, A_INT,
 	A_UNARYOP, A_BINOP,
-	A_BLOCK, A_FUNC,
 	A_CALL,
-	A_LET, A_RETURN,
+	A_RETURN, A_LET,
+	A_BLOCK, A_FUNC,
 	A_FILE,
 };
 
@@ -84,16 +84,16 @@ struct Node {
 			struct Node* right;
 		} expr;
 
-		// RETURN
-		struct Node* value;
-
 		// LET
 		struct {
 			struct Node* name;
 			struct Node* value;
 		} let;
 
-		// FUNC, CALL
+		// RETURN
+		struct Node* value;
+
+		// CALL, FUNC
 		struct {
 			struct Node* name;
 			List* args;
@@ -104,8 +104,6 @@ struct Node {
 		List* list;
 	};
 };
-
-extern char* node_name[];
 
 struct Node* new_node(int kind);
 void debug_node(struct Node* node);

@@ -10,8 +10,6 @@ int main(int argc, char** argv) {
 	gen_init(output_fname);
 
 	struct Node* node = parse_file();
-	debug_node(node);
-
 	gen_node(node);
 
 	return 0;

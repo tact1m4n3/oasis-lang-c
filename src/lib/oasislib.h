@@ -4,6 +4,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/* --------------- utils --------------- */
+
+#define FATAL(fmt, ...) fprintf(stderr, fmt, ##__VA_ARGS__), exit(1)
+#define ASSERT(x, fmt, ...) if (!(x)) { FATAL(fmt, ##__VA_ARGS__); }
+
 /* -------------- object --------------- */
 
 enum {

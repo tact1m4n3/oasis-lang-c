@@ -1,4 +1,7 @@
+func add(a, b) {
+	return a + b
+}
+
 func main() {
-	let a = 10
-	a
+	return add(1, 2)
 }

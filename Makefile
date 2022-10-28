@@ -1,22 +1,21 @@
+ARCH := x86_64
+
 BIN := bin
 OASISC := $(BIN)/oasisc
 
+OASISC_DEFS := -D OASIS_X64
 OASISC_FILES := $(wildcard src/*.c)
 
 all: $(OASISC)
 
 $(OASISC): $(OASISC_FILES)
 	mkdir -p $(dir $@)
-	gcc -o $@ $^
+	gcc $(OASISC_DEFS) -o $@ $^
 
 run: $(OASISC)
 	$(OASISC) examples/test.oasis test.s
-	gcc -o test test.s src/lib/object.c
+	gcc -o test test.s src/lib/main.c src/lib/object.c
 	./test
-
-dis:
-	gcc -g -c examples/test.c -o test.o
-	objdump -drwC test.o
 
 clean:
 	rm -rf $(BIN)
